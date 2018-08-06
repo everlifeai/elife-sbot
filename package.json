@@ -1,0 +1,14 @@
+{
+  "name": "elife-ssb",
+  "version": "0.1.0",
+  "description": "The Everlife Avatar Blockchain",
+  "main": "index.js",
+  "author": "charles.lobo@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "cote": "^0.17.0",
+    "elife-utils": "everlifeai/elife-utils",
+    "scuttlebot": "everlifeai/scuttlebot",
+    "ssb-identities": "everlifeai/ssb-identities"
+  }
+}
