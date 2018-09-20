@@ -47,6 +47,9 @@ function loadConfig() {
         cfg.SSB_FOLDER = "ssb"
     }
 
+    if(process.env.EVERLIFE_HOST_IP){
+        cfg.SSB_HOST = process.env.EVERLIFE_HOST_IP
+    }
     return cfg;
 }
 

@@ -76,6 +76,9 @@ function start(config, cb) {
             allowPrivate: true,
             //appKey: appKey,
         }
+        if(config['SSB_HOST']){
+            cfg['host'] = config['SSB_HOST']
+        }
 
         let sbot = createSbot(cfg)
         sbot.whoami((err, feed) => {
