@@ -40,16 +40,16 @@ function loadConfig() {
         cfg.SSB_WS_PORT = "8996"
     }
 
-
     if(process.env.SSB_FOLDER) {
         cfg.SSB_FOLDER = process.env.SSB_FOLDER
     } else {
         cfg.SSB_FOLDER = "ssb"
     }
 
-    if(process.env.EVERLIFE_HOST_IP){
-        cfg.SSB_HOST = process.env.EVERLIFE_HOST_IP
+    if(process.env.SSB_HOST){
+        cfg.SSB_HOST = process.env.SSB_HOST
     }
+
     return cfg;
 }
 
