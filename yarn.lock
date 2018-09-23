@@ -2597,9 +2597,9 @@ ssb-blobs@^1.1.4:
     pull-stream "^3.3.0"
     ssb-ref "^2.3.0"
 
-ssb-client@^4.5.7:
+"ssb-client@github:everlifeai/ssb-client":
   version "4.5.7"
-  resolved "https://registry.yarnpkg.com/ssb-client/-/ssb-client-4.5.7.tgz#89cf625a70ab8e17073e8971c9fb5b1c046bc8c1"
+  resolved "https://codeload.github.com/everlifeai/ssb-client/tar.gz/6825e911427e3b82fdf1e449c6d2b394acd1ff02"
   dependencies:
     explain-error "^1.0.1"
     multicb "^1.2.1"
@@ -2607,12 +2607,12 @@ ssb-client@^4.5.7:
     muxrpc "^6.4.0"
     pull-hash "^1.0.0"
     pull-stream "^3.6.0"
-    ssb-config "^2.2.0"
+    ssb-config "github:everlifeai/ssb-config"
     ssb-keys "^7.0.13"
 
-ssb-config@^2.0.0, ssb-config@^2.2.0:
+"ssb-config@github:everlifeai/ssb-config":
   version "2.2.0"
-  resolved "https://registry.yarnpkg.com/ssb-config/-/ssb-config-2.2.0.tgz#41cad038a8575af4062d3fd57d3b167be85b03bc"
+  resolved "https://codeload.github.com/everlifeai/ssb-config/tar.gz/978d0fd3b636c098d13c5cc4d00d0be93003f20e"
   dependencies:
     deep-extend "^0.4.0"
     non-private-ip "^1.2.1"
@@ -2695,9 +2695,9 @@ ssb-validate@^3.0.1, ssb-validate@^3.0.7:
   dependencies:
     ssb-ref "^2.6.2"
 
-ssb-ws@^2.1.1:
+"ssb-ws@github:everlifeai/ssb-ws":
   version "2.1.1"
-  resolved "https://registry.yarnpkg.com/ssb-ws/-/ssb-ws-2.1.1.tgz#3d0c3271e8049762e420f36718b36dbb2e480182"
+  resolved "https://codeload.github.com/everlifeai/ssb-ws/tar.gz/f152ea0d82c76e48211102a3b3694a2213277caa"
   dependencies:
     emoji-server "^1.0.0"
     multiblob-http "^0.4.1"

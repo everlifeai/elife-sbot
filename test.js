@@ -1,5 +1,6 @@
 'use strict'
 const cote = require('cote')
+const u = require('elife-utils')
 
 const client = new cote.Requester({
     name: 'Test SSB Client',
@@ -19,12 +20,12 @@ function main() {
                 type: 'dump-msgs',
                 opts: {
                     showPvt: true,
-                    showCnt: true,
+                    showCnt: false,
                     showAth: false,
                 },
             }, (err, msgs) => {
-                if(err) console.error(err)
-                else console.log(msgs)
+                if(err) u.showErr(err)
+                else u.showMsg(msgs)
             })
         }
     })
