@@ -17,10 +17,10 @@ const microservices = require('./microservices')
  */
 function main() {
     let conf = loadConfig()
-    sbot.start(conf, (err, sbot_) => {
+    sbot.start(conf, (err, sbot_, feed) => {
         if(err) u.showErr(err)
         else {
-            microservices.start(conf, sbot_)
+            microservices.start(conf, sbot_, feed.id)
             pollForFeedUpdates(conf, sbot_)
         }
     })

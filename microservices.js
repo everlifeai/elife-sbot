@@ -4,11 +4,12 @@ const pull = require('pull-stream')
 
 
 /*      understand/
- * We hold a reference to the sbot so we can access it for various
- * the various services we provide.
+ * We hold a reference to the sbot (and our id) so we can access it for
+ * various the various services we provide.
  * TODO: Replace this global with a closure
  */
 let sbot
+let ssbid
 
 module.exports = {
     start: start,
@@ -16,8 +17,9 @@ module.exports = {
 }
 
 
-function start(config, sbot_) {
+function start(config, sbot_, ssbid_) {
     sbot = sbot_
+    ssbid = ssbid_
 
     /*      understand/
      * The skill microservice (partitioned by key `everlife-ssb-svc` to
@@ -207,7 +209,7 @@ function registerFeedHandler(req, cb) {
             key: req.mskey,
         })
         feedHandlerRegistry.push({client: client, mstype: req.mstype})
-        cb(null)
+        cb(null, ssbid)
     }
 }
 
