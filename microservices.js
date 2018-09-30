@@ -12,6 +12,7 @@ let sbot
 
 module.exports = {
     start: start,
+    sendToFeedHandlers: sendToFeedHandlers,
 }
 
 
@@ -38,6 +39,8 @@ function start(config, sbot_) {
 
     sbotSvc.on('create-invite', handleCreateInvite)
     sbotSvc.on('accept-invite', handleAcceptInvite)
+
+    sbotSvc.on('register-feed-handler', registerFeedHandler)
 }
 
 function handleNewMsg(req, cb) {
@@ -193,5 +196,31 @@ function handleAcceptInvite(req, cb) {
         return
     }
     sbot.invite.accept(req.invite, cb);
+}
+
+let feedHandlerRegistry = []
+function registerFeedHandler(req, cb) {
+    if(!req.mskey || !req.mstype) cb(`mskey & mstype needed to register feed handler`)
+    else {
+        let client = new cote.Requester({
+            name: `SSB Feed -> ${req.mskey}`,
+            key: req.mskey,
+        })
+        feedHandlerRegistry.push({client: client, mstype: req.mstype})
+        cb(null)
+    }
+}
+
+function sendToFeedHandlers(msg) {
+    send_to_handler_1(0)
+
+    function send_to_handler_1(ndx) {
+        if(ndx >= feedHandlerRegistry.length) return
+        let fh = feedHandlerRegistry[ndx]
+        fh.client.send({
+            type: fh.mstype,
+            msg: msg,
+        })
+    }
 }
 

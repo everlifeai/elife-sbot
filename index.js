@@ -1,6 +1,7 @@
 'use strict'
 const path = require('path')
 const ssbKeys = require('ssb-keys')
+const pull = require('pull-stream')
 const u = require('elife-utils')
 
 const sbot = require('./sbot')
@@ -11,14 +12,17 @@ const microservices = require('./microservices')
  * This is the main entry point where we start.
  *
  *      outcome/
- * Load any configuration information, start scuttlebot the
- * microservice.
+ * Load any configuration information, start scuttlebot, the
+ * microservice, and poll for feed updates.
  */
 function main() {
     let conf = loadConfig()
-    sbot.start(conf, (err, sbot) => {
+    sbot.start(conf, (err, sbot_) => {
         if(err) u.showErr(err)
-        else microservices.start(conf, sbot)
+        else {
+            microservices.start(conf, sbot_)
+            pollForFeedUpdates(conf, sbot_)
+        }
     })
 }
 
@@ -51,6 +55,20 @@ function loadConfig() {
     }
 
     return cfg;
+}
+
+/*      understand/
+ * Setting `live:true` keeps the channel open and new messages
+ * continually pouring in.
+ *
+ *      outcome/
+ * Send any feed update messages to registered feed handlers
+ */
+function pollForFeedUpdates(conf, sbot_) {
+    pull(
+        sbot_.createFeedStream({live:true}),
+        pull.drain(microservices.sendToFeedHandlers)
+    )
 }
 
 main()
