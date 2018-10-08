@@ -66,7 +66,7 @@ function loadConfig() {
  */
 function pollForFeedUpdates(conf, sbot_) {
     pull(
-        sbot_.createFeedStream({live:true}),
+        sbot_.createFeedStream({live:true,old:false}),
         pull.drain(microservices.sendToFeedHandlers)
     )
 }
