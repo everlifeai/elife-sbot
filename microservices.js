@@ -43,6 +43,9 @@ function start(config, sbot_, ssbid_) {
     sbotSvc.on('accept-invite', handleAcceptInvite)
 
     sbotSvc.on('register-feed-handler', registerFeedHandler)
+
+    sbotSvc.on('follow-user', handleFollowUser)
+    sbotSvc.on('unfollow-user', handleUnFollowUser)
 }
 
 function handleNewMsg(req, cb) {
@@ -226,3 +229,22 @@ function sendToFeedHandlers(msg) {
     }
 }
 
+function handleFollowUser(req,cb){
+    if(!req.userid) cb('No user id found')
+
+    sbot.publish({
+        type: 'contact',
+        contact: req.userid,
+        following: true 
+      }, cb)
+}
+
+function handleUnFollowUser(req,cb){
+    if(!req.userid) cb('No user id found')
+
+    sbot.publish({
+        type: 'contact',
+        contact: req.userid,
+        following: false 
+      }, cb)
+}
