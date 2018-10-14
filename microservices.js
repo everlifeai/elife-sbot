@@ -46,6 +46,8 @@ function start(config, sbot_, ssbid_) {
 
     sbotSvc.on('follow-user', handleFollowUser)
     sbotSvc.on('unfollow-user', handleUnFollowUser)
+
+    sbotSvc.on('avatar-id', handleAvatarId)
 }
 
 function handleNewMsg(req, cb) {
@@ -247,4 +249,8 @@ function handleUnFollowUser(req,cb){
         contact: req.userid,
         following: false 
       }, cb)
+}
+
+function handleAvatarId(req, cb) {
+    cb(null, sbot.id)
 }
