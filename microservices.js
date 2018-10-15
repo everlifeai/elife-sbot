@@ -214,7 +214,7 @@ function registerFeedHandler(req, cb) {
             key: req.mskey,
         })
         feedHandlerRegistry.push({client: client, mstype: req.mstype})
-        cb(null, ssbid)
+        cb(null)
     }
 }
 
