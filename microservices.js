@@ -48,6 +48,7 @@ function start(config, sbot_, ssbid_) {
     sbotSvc.on('unfollow-user', handleUnFollowUser)
 
     sbotSvc.on('avatar-id', handleAvatarId)
+    sbotSvc.on('set-nickname', setNickName)
 }
 
 function handleNewMsg(req, cb) {
@@ -253,4 +254,14 @@ function handleUnFollowUser(req,cb){
 
 function handleAvatarId(req, cb) {
     cb(null, sbot.id)
+}
+
+function setNickName(req,cb){
+    if(!req.nickname) cb('No nick name found')
+
+    sbot.publish({
+        type: 'about',
+        about: sbot.id,
+        name: req.nickname
+    },cb)
 }
