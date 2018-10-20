@@ -48,6 +48,7 @@ function start(config, sbot_, ssbid_) {
     sbotSvc.on('unfollow-user', handleUnFollowUser)
 
     sbotSvc.on('avatar-id', handleAvatarId)
+    sbotSvc.on('msg-by-type', getMessageByType)
 }
 
 function handleNewMsg(req, cb) {
@@ -253,4 +254,12 @@ function handleUnFollowUser(req,cb){
 
 function handleAvatarId(req, cb) {
     cb(null, sbot.id)
+}
+
+function getMessageByType(req,cb){
+
+    pull(
+        sbot.messagesByType({ id: sbot.id,type:req.msgtype }),
+        pull.collect(function (err, msgs) { cb(err,msgs)})
+    )
 }
