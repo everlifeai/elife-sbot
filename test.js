@@ -16,6 +16,7 @@ function main() {
     if(args.length == 2) showHelp()
     let cmd = args[2]
     if(cmd == 'dump') dump(args[3])
+    if(cmd == 'dump-type') dump_type(args[3])
     if(cmd == 'msg') add(args[3])
     if(cmd == 'invite') invite(args[3])
     if(cmd == 'join') join(args[3])
@@ -25,10 +26,26 @@ function showHelp() {
     u.showMsg(`
 Help:
     dump <id>:   show feed <for user>
+    dump-type type: show feed of messages of type
     msg txt: add message with text
     join invite: use the invite to join a pub
 `)
 }
+
+function dump_type(type_) {
+    let req = {
+        type: 'msg-by-type',
+        msgtype: type_,
+    }
+
+    client.send(req, (err, msgs) => {
+        if(err) u.showErr(err)
+        else u.showMsg(msgs)
+
+        process.exit()
+    })
+}
+
 
 function dump(user) {
     let req = {
