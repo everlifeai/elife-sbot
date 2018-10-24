@@ -47,7 +47,7 @@ function loadConfig() {
     if(process.env.SSB_FOLDER) {
         cfg.SSB_FOLDER = process.env.SSB_FOLDER
     } else {
-        cfg.SSB_FOLDER = "ssb"
+        cfg.SSB_FOLDER = "/data"
     }
 
     if(process.env.SSB_HOST){
