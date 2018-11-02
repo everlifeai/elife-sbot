@@ -129,7 +129,7 @@ function handleDumpMsgs(req, cb) {
 function dumpMsgs(id, opts, cb) {
     if(!opts) opts = {};
     let feedOpts = { private : opts.showPvt }
-    let cmd = sbot.createFeedStream
+    let cmd = sbot.createLogStream
 
     if(id) {
         feedOpts.id = id
