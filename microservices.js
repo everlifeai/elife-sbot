@@ -203,7 +203,12 @@ function handleAcceptInvite(req, cb) {
         cb(`No invite found`)
         return
     }
-    sbot.invite.accept(req.invite, cb);
+    try {
+        sbot.invite.accept(req.invite, cb);
+    } catch(e) {
+        console.error(e)
+        cb(`Unexpected error joining pub!`)
+    }
 }
 
 let feedHandlerRegistry = []
