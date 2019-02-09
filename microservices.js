@@ -265,6 +265,17 @@ function getMessageByType(req,cb){
 
     pull(
         sbot.messagesByType({ id: sbot.id,type:req.msgtype }),
-        pull.collect(function (err, msgs) { cb(err,msgs)})
+        pull.collect(function (err, msgs) { unboxPrivateMsgs(msgs,cb)})
     )
+}
+
+function unboxPrivateMsgs(msgs,cb){
+    let decMsgs = []
+    for(let msg of msgs){
+        if(typeof msg.value.content == 'string')
+            decMsgs.push(sbot.private.unbox(msg) )
+        else
+            decMsgs.push(msg)
+    }
+    cb(null,decMsgs)
 }
