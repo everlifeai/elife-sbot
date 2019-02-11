@@ -4,24 +4,23 @@ const ssbKeys = require('ssb-keys')
 const u = require('elife-utils')
 
 
-const createSbot = require('scuttlebot')
-                   .use(require('scuttlebot/plugins/onion'))
-                   .use(require('scuttlebot/plugins/unix-socket'))
-                   .use(require('scuttlebot/plugins/no-auth'))
-                   .use(require('scuttlebot/plugins/plugins'))
-                   .use(require('scuttlebot/plugins/master'))
+const createSbot = require('ssb-server')
+                   .use(require('ssb-server/plugins/master'))
+                   .use(require('ssb-server/plugins/no-auth'))
+                   .use(require('ssb-server/plugins/unix-socket'))
+                   .use(require('ssb-server/plugins/local'))
+                   .use(require('ssb-server/plugins/logging'))
+
                    .use(require('ssb-gossip'))
                    .use(require('ssb-replicate'))
                    .use(require('ssb-friends'))
                    .use(require('ssb-blobs'))
                    .use(require('ssb-invite'))
-                   .use(require('scuttlebot/plugins/local'))
-                   .use(require('scuttlebot/plugins/logging'))
-                   .use(require('ssb-query'))
-                   .use(require('ssb-links'))
-                   .use(require('ssb-ws'))
-                   .use(require('ssb-ebt'))
+
                    .use(require('ssb-identities'))
+
+                   .use(require('ssb-links'))
+                   .use(require('ssb-ebt'))
 
 
 module.exports = {
@@ -41,16 +40,10 @@ const appKey = new Buffer('P6EGPtCNW7irtdeIk+vRVzVbWOlctUKJuce1IZkO2N4=', 'base6
  */
 function start(config, cb) {
     let port = config['SSB_PORT']
-    let ws_port = config['SSB_WS_PORT']
     let sbotFolder = config["SSB_FOLDER"]
 
-    if(!sbotFolder) {
-        cb(`Scuttlebot data folder not set`)
-        return
-    }
-
-    if(!port || !ws_port) {
-        cb(`Set the ssb-port and ws-port in the configuration`)
+    if(!port) {
+        cb(`Set the ssb-port in the configuration`)
         return
     }
 
@@ -74,14 +67,12 @@ function start(config, cb) {
 
         let cfg = {
             port : port,
-            ws : { port : ws_port },
             keys: keys,
             path: sbotFolder,
             allowPrivate: true,
-            //appKey: appKey,
-        }
-        if(config['SSB_HOST']){
-            cfg['host'] = config['SSB_HOST']
+            caps: {
+                shs: appKey
+            },
         }
 
         let sbot = createSbot(cfg)
