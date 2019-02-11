@@ -18,6 +18,7 @@ const createSbot = require('ssb-server')
                    .use(require('ssb-invite'))
 
                    .use(require('ssb-identities'))
+                   .use(require('ssb-private'))
 
                    .use(require('ssb-links'))
                    .use(require('ssb-ebt'))

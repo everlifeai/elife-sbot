@@ -9,6 +9,7 @@
     "cote": "^0.17.0",
     "elife-utils": "everlifeai/elife-utils",
     "ssb-identities": "ssbc/ssb-identities",
+    "ssb-private": "ssbc/ssb-private",
     "ssb-server": "ssbc/ssb-server"
   }
 }
