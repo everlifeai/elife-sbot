@@ -1,6 +1,8 @@
 'use strict'
 const cote = require('cote')({statusLogsEnabled:false})
 const pull = require('pull-stream')
+const fs = require('fs')
+const toPull = require('stream-to-pull-stream')
 
 
 /*      understand/
@@ -49,6 +51,9 @@ function start(config, sbot_, ssbid_) {
 
     sbotSvc.on('avatar-id', handleAvatarId)
     sbotSvc.on('msg-by-type', getMessageByType)
+
+    sbotSvc.on('publish-file', publishFile)
+    sbotSvc.on('get-file-content', getFileContent)
 }
 
 function handleNewMsg(req, cb) {
@@ -286,4 +291,45 @@ function unboxPvtMsgs(msgs, cb) {
         }
     }
     cb(null, decMsgs)
+}
+
+/**
+ *  /outcome
+ * This function will check the given file path is valid or not
+ * If valid means store the file in blob and returns as a hash value
+ * else returns error message
+ */
+function publishFile(req, cb){
+
+    if(!req.filePath
+        || !fs.existsSync(req.filePath)
+        || !fs.lstatSync(req.filePath).isFile()){
+        cb('Invalid file path')
+        return
+    }
+    pull(
+        toPull.source(fs.createReadStream(req.filePath)),
+        sbot.blobs.add((err, hash) => {
+            if(err) cb(err)
+            else cb(null,hash)
+        })
+    )
+}
+
+/**
+ *  /outcome
+ * Get the content(Buffer) from blob for a given hash value
+ */
+function getFileContent(req, cb){
+
+    if(!req.hash){
+        cb('No hash value found to search a file')
+        return
+    }
+    pull(
+        sbot.blobs.get(req.hash),
+        pull.collect((err, values) => {
+            cb(err, values)
+        })
+    )
 }
