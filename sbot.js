@@ -71,6 +71,7 @@ function start(config, cb) {
             keys: keys,
             path: sbotFolder,
             allowPrivate: true,
+            local: false,
             caps: {
                 shs: appKey
             },
