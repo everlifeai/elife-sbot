@@ -52,8 +52,8 @@ function start(config, sbot_, ssbid_) {
     sbotSvc.on('avatar-id', handleAvatarId)
     sbotSvc.on('msg-by-type', getMessageByType)
 
-    sbotSvc.on('publish-file', publishFile)
-    sbotSvc.on('get-file-content', getFileContent)
+    sbotSvc.on('blob-save-file', saveFileAsBlob)
+    sbotSvc.on('blob-load', loadBlob)
 }
 
 function handleNewMsg(req, cb) {
@@ -294,42 +294,45 @@ function unboxPvtMsgs(msgs, cb) {
 }
 
 /**
- *  /outcome
- * This function will check the given file path is valid or not
- * If valid means store the file in blob and returns as a hash value
- * else returns error message
+ *      /outcome
+ * Save the file from the given path as a blob on SSB and return it's
+ * hash (which must be stored somewhere as it's reference).
  */
-function publishFile(req, cb){
+function saveFileAsBlob(req, cb){
 
-    if(!req.filePath
-        || !fs.existsSync(req.filePath)
-        || !fs.lstatSync(req.filePath).isFile()){
-        cb('Invalid file path')
-        return
+    if(!req.filePath) {
+        return cb('Cannot find file path to save blob')
     }
-    pull(
-        toPull.source(fs.createReadStream(req.filePath)),
-        sbot.blobs.add((err, hash) => {
-            if(err) cb(err)
-            else cb(null,hash)
-        })
-    )
+
+    try {
+        pull(
+            toPull.source(fs.createReadStream(req.filePath)),
+            sbot.blobs.add((err, hash) => {
+                if(err) cb(err)
+                else cb(null,hash)
+            })
+        )
+    } catch(e) {
+        cb(e)
+    }
 }
 
 /**
- *  /outcome
+ *      /outcome
  * Get the content(Buffer) from blob for a given hash value
  */
-function getFileContent(req, cb){
+function loadBlob(req, cb){
 
-    if(!req.hash){
-        cb('No hash value found to search a file')
-        return
+    if(!req.hash) {
+        return cb('Cannot load blob with empty hash value')
     }
-    pull(
-        sbot.blobs.get(req.hash),
-        pull.collect((err, values) => {
-            cb(err, values)
-        })
-    )
+
+    try {
+        pull(
+            sbot.blobs.get(req.hash),
+            pull.collect(cb)
+        )
+    } catch(e) {
+        cb(e)
+    }
 }
