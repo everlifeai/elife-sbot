@@ -269,8 +269,11 @@ function handleAvatarId(req, cb) {
 function getMessageByType(req,cb){
 
     pull(
-        sbot.messagesByType({ id: sbot.id,type:req.msgtype }),
-        pull.collect(function (err, msgs) { cb(err,msgs)})
+        sbot.messagesByType({ id: sbot.id,type:req.msgtype, private: true }),
+        pull.collect(function (err, msgs) {
+            if(err) cb(err)
+            else cb(null, msgs)
+        })
     )
 }
 
