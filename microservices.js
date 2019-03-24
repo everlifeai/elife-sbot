@@ -3,6 +3,7 @@ const cote = require('cote')({statusLogsEnabled:false})
 const pull = require('pull-stream')
 const fs = require('fs')
 const toPull = require('stream-to-pull-stream')
+const tmp = require('tmp')
 
 
 /*      understand/
@@ -53,6 +54,7 @@ function start(config, sbot_, ssbid_) {
     sbotSvc.on('msg-by-type', getMessageByType)
 
     sbotSvc.on('blob-save-file', saveFileAsBlob)
+    sbotSvc.on('blob-save-array', saveArrayAsBlob)
     sbotSvc.on('blob-load', loadBlob)
 }
 
@@ -285,20 +287,54 @@ function getMessageByType(req,cb){
 function saveFileAsBlob(req, cb){
 
     if(!req.filePath) {
-        return cb('Cannot find file path to save blob')
+        return cb('No file path found to save blob')
     }
 
     try {
         pull(
             toPull.source(fs.createReadStream(req.filePath)),
-            sbot.blobs.add((err, hash) => {
-                if(err) cb(err)
-                else cb(null,hash)
-            })
+            sbot.blobs.add(cb)
         )
     } catch(e) {
         cb(e)
     }
+}
+
+/**
+ *      /outcome
+ * Write the array into a temporary file then save it as a blob
+ *
+ *
+ * Seems like a round-about way of doing this but I can't figure out any
+ * other way. The obvious:
+ *      pull(
+ *          pull.values([1,2,3]),
+ *          sbot.blobs.add(cb)
+ *      )
+ * Raises an exception and crashes.
+ *
+ */
+function saveArrayAsBlob(req, cb){
+    if(!req.bytes || !req.bytes.length) {
+        return cb(`No bytes found to save as blob`)
+    }
+
+    tmp.file((err, path_, fd, cleanup) => {
+        if(err) cb(err)
+        else {
+            let ta = new Uint8Array(req.bytes)
+            fs.writeFile(fd, ta, (err) => {
+                if(err) cb(err)
+                else {
+                    saveFileAsBlob({ filePath: path_ }, (err, hash) => {
+                        cleanup()
+                        cb(err, hash)
+                    })
+                }
+            })
+        }
+    })
+
 }
 
 /**

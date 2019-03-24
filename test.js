@@ -20,6 +20,9 @@ function main() {
     if(cmd == 'msg') add(args[3])
     if(cmd == 'invite') invite(args[3])
     if(cmd == 'join') join(args[3])
+    if(cmd == 'file-blob') fileBlob(args[3])
+    if(cmd == 'array-blob') arrayBlob(args[3])
+    if(cmd == 'dump-blob') dumpBlob(args[3])
 }
 
 function showHelp() {
@@ -28,7 +31,11 @@ Help:
     dump <id>:   show feed <for user>
     dump-type type: show feed of messages of type
     msg txt: add message with text
+    invite: create invite
     join invite: use the invite to join a pub
+    file-blob path: Create blob from file
+    array-blob [a,r,r,a,y]: Create blob from array
+    dump-blob hash: Dump blob
 `)
 }
 
@@ -89,6 +96,28 @@ function join(inv) {
         else u.showMsg('Ok')
 
         process.exit()
+    })
+}
+
+function fileBlob(p) {
+    client.send({ type: 'blob-save-file', filePath: p }, (err, hash) => {
+        if(err) u.showErr(err)
+        else u.showMsg(`Blob created: ${hash}`)
+    })
+}
+
+function arrayBlob(a) {
+    let arr = JSON.parse(a)
+    client.send({ type: 'blob-save-array', bytes: arr }, (err, hash) => {
+        if(err) u.showErr(err)
+        else u.showMsg(`Blob created: ${hash}`)
+    })
+}
+
+function dumpBlob(h) {
+    client.send({ type: 'blob-load', hash: h }, (err, blob) => {
+        if(err) u.showErr(err)
+        else u.showMsg(blob)
     })
 }
 
