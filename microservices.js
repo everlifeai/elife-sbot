@@ -3,7 +3,6 @@ const cote = require('cote')({statusLogsEnabled:false})
 const pull = require('pull-stream')
 const fs = require('fs')
 const toPull = require('stream-to-pull-stream')
-const tmp = require('tmp')
 
 
 /*      understand/
@@ -302,39 +301,21 @@ function saveFileAsBlob(req, cb){
 
 /**
  *      /outcome
- * Write the array into a temporary file then save it as a blob
- *
- *
- * Seems like a round-about way of doing this but I can't figure out any
- * other way. The obvious:
- *      pull(
- *          pull.values([1,2,3]),
- *          sbot.blobs.add(cb)
- *      )
- * Raises an exception and crashes.
- *
+ * Write the given array of bytes as a blob and return it's hash
  */
 function saveArrayAsBlob(req, cb){
     if(!req.bytes || !req.bytes.length) {
         return cb(`No bytes found to save as blob`)
     }
 
-    tmp.file((err, path_, fd, cleanup) => {
-        if(err) cb(err)
-        else {
-            let ta = new Uint8Array(req.bytes)
-            fs.writeFile(fd, ta, (err) => {
-                if(err) cb(err)
-                else {
-                    saveFileAsBlob({ filePath: path_ }, (err, hash) => {
-                        cleanup()
-                        cb(err, hash)
-                    })
-                }
-            })
-        }
-    })
-
+    try {
+        pull(
+            pull.values([Buffer.from(req.bytes)]),
+            sbot.blobs.add(cb)
+        )
+    } catch(e) {
+        cb(e)
+    }
 }
 
 /**
