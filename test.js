@@ -34,7 +34,7 @@ Help:
     invite: create invite
     join invite: use the invite to join a pub
     file-blob path: Create blob from file
-    array-blob [a,r,r,a,y]: Create blob from array
+    array-blob [1,2,3,4]: Create blob from array
     dump-blob hash: Dump blob
 `)
 }
