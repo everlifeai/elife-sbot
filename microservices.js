@@ -310,7 +310,7 @@ function saveArrayAsBlob(req, cb){
 
     try {
         pull(
-            pull.values([Buffer.from(req.bytes)]),
+            pull.once(Buffer.from(req.bytes)),
             sbot.blobs.add(cb)
         )
     } catch(e) {
