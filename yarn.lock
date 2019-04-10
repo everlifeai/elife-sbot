@@ -841,8 +841,8 @@ elegant-spinner@^1.0.0:
   integrity sha1-2wQ1IcldfjA/2PNFvtwzSc+wcp4=
 
 elife-utils@everlifeai/elife-utils:
-  version "0.1.0"
-  resolved "https://codeload.github.com/everlifeai/elife-utils/tar.gz/e788d18fa80eabf5ff916cd30fd25a47ff74971a"
+  version "0.2.0"
+  resolved "https://codeload.github.com/everlifeai/elife-utils/tar.gz/97c50f3aab4e5e6c13a8105440656823bba36262"
 
 emoji-named-characters@~1.0.2:
   version "1.0.2"
@@ -2150,15 +2150,14 @@ multiblob-http@^0.4.2:
     stream-to-pull-stream "^1.7.0"
 
 multiblob@^1.12.0, multiblob@^1.13.0:
-  version "1.13.3"
-  resolved "https://registry.yarnpkg.com/multiblob/-/multiblob-1.13.3.tgz#d76754adb87afa641ec807556a151e840a262481"
-  integrity sha512-OUslBrwWIt02Qg+XTmmOGPhYB8/HzfTQne+EDeqI9vijKdLaLed6QpWE+658txLOgbYJidjj+frFbx37fbdi8w==
+  version "1.13.4"
+  resolved "https://registry.yarnpkg.com/multiblob/-/multiblob-1.13.4.tgz#1a757a67544f320f0e06ee700010ea68f7467ae5"
+  integrity sha512-2uv89W7I5brTx6ETpE7kXv0dGC3iA+xrAxNtwjwb3lwBTXIYrJ4jhhVX5UyNaRWHdmfLe0dJeEvJm9uoekkmag==
   dependencies:
     blake2s "^1.0.1"
     cont "^1.0.1"
     explain-error "^1.0.1"
     mkdirp "^0.5.0"
-    pull-cat "^1.1.8"
     pull-catch "^1.0.0"
     pull-defer "^0.2.2"
     pull-file "^1.0.0"
@@ -2704,7 +2703,7 @@ pull-box-stream@^1.0.13:
     pull-through "^1.0.18"
     split-buffer "~1.0.0"
 
-pull-cat@^1.1.11, pull-cat@^1.1.8, pull-cat@^1.1.9, pull-cat@~1.1.5:
+pull-cat@^1.1.11, pull-cat@^1.1.9, pull-cat@~1.1.5:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/pull-cat/-/pull-cat-1.1.11.tgz#b642dd1255da376a706b6db4fa962f5fdb74c31b"
   integrity sha1-tkLdElXaN2pwa220+pYvX9t0wxs=
@@ -3250,9 +3249,9 @@ secret-handshake@^1.1.16:
     pull-stream "^3.4.5"
 
 secret-stack@^6.0.2:
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/secret-stack/-/secret-stack-6.0.3.tgz#787a491cb9310d5dd74ee69086713b6cae3fcbaa"
-  integrity sha512-CYWATC3Gw61VTiNIe06yxwm4tE969jmEwkiTscmDyrIcPDwwscy2w7v5ttfy7uTuE9FepVprw1zukF3HrXX76w==
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/secret-stack/-/secret-stack-6.1.0.tgz#45d29c2f68f1c6b07f33479743ec26b7eb8face6"
+  integrity sha512-p25ZAtozHeQEcFSNdxGgtkTkzoEwdq2c1Z0NXoTrLdvaAd+Oxu51oZ/iITKzz7rji5amutnicIzeb6zlij8czA==
   dependencies:
     debug "^4.1.0"
     hoox "0.0.1"
@@ -3516,9 +3515,9 @@ split-string@^3.0.1, split-string@^3.0.2:
     extend-shallow "^3.0.0"
 
 ssb-blobs@^1.1.13:
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/ssb-blobs/-/ssb-blobs-1.1.13.tgz#91a01314c93d4327228c88ab8f5851859824f36c"
-  integrity sha512-vW/PuIBQMU06GFjbmUrszT14nZGXtuTT+wRuFnBde2Jg7KEhyWSAGx57YjqmZdJbHCd8N2/CQKAWre97PabvoQ==
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/ssb-blobs/-/ssb-blobs-1.1.14.tgz#2ef39afafeff693d852c38c8a088e452e235ae1b"
+  integrity sha512-xDRcpBcfafylwsLuTeFM+QaYl8mjc19u3UsrpIQckRkHd4c300zXUKS8NyOmZGiGDWVObCMV1WGI+e0AlYrDLw==
   dependencies:
     cont "^1.0.3"
     debug "^4.1.1"
@@ -3530,9 +3529,9 @@ ssb-blobs@^1.1.13:
     ssb-ref "^2.3.0"
 
 ssb-client@^4.6.0, ssb-client@^4.7.1:
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/ssb-client/-/ssb-client-4.7.1.tgz#776c5c466a41e35a50230d101b7e4a17c27fa37c"
-  integrity sha512-b6pCnYLPq1elhO+ZJLnnPXJECO8dYYpK2OGxCO8ZPGFIn1O1eiKvXoWy4lGBR06jmDY6JVu9ZgTWQ4vSOjPt9w==
+  version "4.7.2"
+  resolved "https://registry.yarnpkg.com/ssb-client/-/ssb-client-4.7.2.tgz#d68218ad70d0c0ebb31006916ad37b917d179648"
+  integrity sha512-sZPs/i5Zm8f3faJDbYYpBlxocIYi8VR4KksQrHbncYCnCo1n4diBmLx76dNRC3p0rpyqgkX38gMcEVIYe4dYZw==
   dependencies:
     explain-error "^1.0.1"
     multicb "^1.2.1"
