@@ -35,13 +35,13 @@ function loadConfig() {
     if(process.env.SSB_PORT) {
         cfg.SSB_PORT = process.env.SSB_PORT
     } else {
-        cfg.SSB_PORT = "8997"
+        cfg.SSB_PORT = u.adjustPort(8997)
     }
 
     if(process.env.SSB_WS_PORT) {
         cfg.SSB_WS_PORT = process.env.SSB_WS_PORT
     } else {
-        cfg.SSB_WS_PORT = "8996"
+        cfg.SSB_WS_PORT = u.adjustPort(8996)
     }
 
     if(process.env.SSB_FOLDER) {
