@@ -2190,9 +2190,9 @@ multiserver-scopes@^1.0.0:
     non-private-ip "^1.4.4"
 
 multiserver@^3.0.2, multiserver@^3.1.0, multiserver@^3.1.2, multiserver@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/multiserver/-/multiserver-3.3.1.tgz#3de6e1917577d35b4c38feb90141892781678547"
-  integrity sha512-c27pE5N8m6WlU9OkOWjmZ/jY/d+s9Wnpv45qtm65GkHtJKgNR5MBSxPA+r07RadNV9ZQJkCgEtpQg7M2eITGpw==
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/multiserver/-/multiserver-3.3.2.tgz#ba09f2ecf2b385ed9c61eec2c043c97e0caa2ae9"
+  integrity sha512-VR1VOH4lZiF8SwiAx/en8ShfOOiA7xtDu8HMawnKk0snmK0vn28/gFKnJGrYgBsoZHBzhB2mU6ZWb9VDGklN4A==
   dependencies:
     debug "^4.1.1"
     multicb "^1.2.2"
