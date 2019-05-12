@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const fs = require('fs')
 const ssbKeys = require('ssb-keys')
 const u = require('elife-utils')
 
@@ -80,6 +81,10 @@ function start(config, cb) {
         sbot.whoami((err, feed) => {
             if(err) cb(`Failed starting scuttlebot server ${err}`)
             else {
+                let manifest = sbot.getManifest()
+                let manifestf = path.join(cfg.path, 'manifest.json')
+                fs.writeFileSync(manifestf, JSON.stringify(manifest))
+
                 cb(null, sbot, feed)
             }
         })
