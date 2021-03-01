@@ -1,4 +1,5 @@
 'use strict'
+
 const path = require('path')
 const fs = require('fs')
 const ssbKeys = require('ssb-keys')
@@ -6,11 +7,10 @@ const u = require('elife-utils')
 
 
 const createSbot = require('ssb-server')
-                   .use(require('ssb-server/plugins/master'))
-                   .use(require('ssb-server/plugins/no-auth'))
-                   .use(require('ssb-server/plugins/unix-socket'))
-                   .use(require('ssb-server/plugins/local'))
-                   .use(require('ssb-server/plugins/logging'))
+                   .use(require('ssb-master'))
+                   .use(require('ssb-no-auth'))
+                   .use(require('ssb-unix-socket'))
+                   .use(require('ssb-logging'))
 
                    .use(require('ssb-gossip'))
                    .use(require('ssb-replicate'))
@@ -22,8 +22,6 @@ const createSbot = require('ssb-server')
 
                    .use(require('ssb-links'))
                    .use(require('ssb-ebt'))
-
-
 module.exports = {
     start: start,
 }
