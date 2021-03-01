@@ -2,7 +2,7 @@
 const path = require('path')
 const ssbKeys = require('ssb-keys')
 const pull = require('pull-stream')
-const u = require('elife-utils')
+const u = require('@elife/utils')
 
 const sbot = require('./sbot')
 const microservices = require('./microservices')

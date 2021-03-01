@@ -7,10 +7,12 @@
   "license": "MIT",
   "dependencies": {
     "cote": "^0.17.0",
-    "elife-utils": "everlifeai/elife-utils",
+    "@elife/utils": "^2.1.1",
     "ssb-identities": "ssbc/ssb-identities",
     "ssb-ref": "^2.14.3",
-    "ssb-server": "ssbc/ssb-server"
+    "ssb-server": "ssbc/ssb-server",
+    "pull-stream":"^3.6.14",
+    "ssb-keys":"^8.0.2",
+    "stream-to-pull-stream":"^1.7.3"
   }
-
 }
