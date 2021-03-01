@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "charles.lobo@gmail.com",
   "license": "MIT",
+  "scripts": {
+    "postinstall": "node fixAppKey.js"
+  },
   "dependencies": {
     "cote": "^0.17.0",
     "@elife/utils": "^2.1.1",
