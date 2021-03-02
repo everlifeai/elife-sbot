@@ -3,7 +3,7 @@
 const path = require('path')
 const fs = require('fs')
 const ssbKeys = require('ssb-keys')
-const u = require('elife-utils')
+const u = require('@elife/utils')
 
 
 const createSbot = require('ssb-server')

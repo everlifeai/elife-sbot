@@ -33,7 +33,7 @@ function withJSFiles(p, cb) {
                         if(stats.isDirectory()) {
                             withJSFiles(file, cb)
                         } else if(stats.isFile()) {
-                            if(file.endsWith(".js")) cb(null, file)
+                            if(file.endsWith(".js") || file.endsWith(".json")) cb(null, file)
                         }
                     }
                 })
