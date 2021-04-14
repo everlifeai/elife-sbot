@@ -1,6 +1,6 @@
 {
   "name": "elife-ssb",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "The Everlife Avatar Blockchain",
   "main": "index.js",
   "author": "charles.lobo@gmail.com",
