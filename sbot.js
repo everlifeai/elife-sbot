@@ -61,7 +61,7 @@ function start(config, cb) {
     })
 
     function start_sbot_1() {
-        let secret = path.join(sbotFolder, 'nucleus')
+        let secret = path.join(sbotFolder, 'secret')
         let keys = ssbKeys.loadOrCreateSync(secret)
 
         let cfg = {
