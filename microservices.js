@@ -3,7 +3,7 @@ const cote = require('cote')({statusLogsEnabled:false})
 const pull = require('pull-stream')
 const fs = require('fs')
 const toPull = require('stream-to-pull-stream')
-
+const sbotUtil = require('./sbot-util')
 
 /*      understand/
  * We hold a reference to the sbot (and our id) so we can access it for
@@ -22,7 +22,7 @@ module.exports = {
 function start(config, sbot_, ssbid_) {
     sbot = sbot_
     ssbid = ssbid_
-
+    
     /*      understand/
      * The skill microservice (partitioned by key `everlife-ssb-svc` to
      * prevent conflicting with other services.
@@ -55,6 +55,9 @@ function start(config, sbot_, ssbid_) {
     sbotSvc.on('blob-save-file', saveFileAsBlob)
     sbotSvc.on('blob-save-array', saveArrayAsBlob)
     sbotSvc.on('blob-load', loadBlob)
+
+    sbotSvc.on('box-blob-save-file', saveFileAsPrivateBlob)
+    sbotSvc.on('unbox-blob-save-file', unboxPrivateBlob)
 }
 
 function handleNewMsg(req, cb) {
@@ -333,6 +336,31 @@ function loadBlob(req, cb){
             sbot.blobs.get(req.hash),
             pull.collect(cb)
         )
+    } catch(e) {
+        cb(e)
+    }
+}
+
+
+function saveFileAsPrivateBlob(req, cb) {
+
+    if(!req.filePath) {
+        return cb('No file path found to save blob')
+    }
+
+    try {
+        sbotUtil.boxBlob(req.filePath, sbot, cb)
+    } catch(e) {
+        cb(e)
+    }
+}
+
+function unboxPrivateBlob(req, cb) {
+    if(!req.blobId) {
+        return cb('No blob id to unbox')
+    }
+    try {
+        sbotUtil.unBoxBlob(req.blobId, sbot, cb)
     } catch(e) {
         cb(e)
     }
