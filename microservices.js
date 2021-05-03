@@ -72,7 +72,7 @@ function handleNewMsg(req, cb) {
         return
     }
 
-    sbot.identities.publishAs({ id:id, content:req.msg, private:false }, cb)
+    sbot.publish(req.msg, cb)
 }
 function handleNewPvtMsg(req, cb) {
     let id
@@ -93,9 +93,9 @@ function handleNewPvtMsg(req, cb) {
         return
     }
 
-    req.msg.recps = [ req.to, id ]
+    const recps = [ req.to, id ]
 
-    sbot.identities.publishAs({ id:id, content:req.msg, private:true }, cb)
+    sbot.private.publish(req.msg, recps, cb)
 }
 function handleNewPvtLog(req, cb) {
     let id
@@ -112,9 +112,9 @@ function handleNewPvtLog(req, cb) {
         return
     }
 
-    req.msg.recps = [ id ]
+    const recps = [ id ]
 
-    sbot.identities.publishAs({ id:id, content:req.msg, private:true }, cb)
+    sbot.private.publish(req.msg, recps, cb)
 }
 function handleDumpMsgs(req, cb) {
     let id = req.user

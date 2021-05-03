@@ -6,22 +6,35 @@ const ssbKeys = require('ssb-keys')
 const u = require('@elife/utils')
 
 
-const createSbot = require('ssb-server')
-                   .use(require('ssb-master'))
-                   .use(require('ssb-no-auth'))
-                   .use(require('ssb-unix-socket'))
-                   .use(require('ssb-logging'))
+const createSbot = require('secret-stack')()
+  .use(require('ssb-db'))
+  .use(require('ssb-conn'))
+  .use(require('ssb-lan'))
+  .use(require('ssb-logging'))
+  .use(require('ssb-master'))
+  .use(require('ssb-no-auth'))
+  .use(require('ssb-replicate'))
+  .use(require('ssb-unix-socket'))
+  .use(require('ssb-friends')) // not strictly required, but helps ssb-conn a lot
+  .use(require('ssb-blobs'))
+  .use(require('ssb-backlinks'))
+  .use(
+    require('ssb-social-index')({
+      namespace: 'about',
+      type: 'about',
+      destField: 'about'
+    })
+  )
+  .use(require('ssb-private'))
+  .use(require('ssb-room/tunnel/client'))
+  .use(require('ssb-dht-invite'))
+  .use(require('ssb-invite'))
+  .use(require('ssb-query'))
+  .use(require('ssb-search'))
+  .use(require('ssb-ws'))
+  .use(require('ssb-tags'))
+  .use(require('ssb-ebt'))
 
-                   .use(require('ssb-gossip'))
-                   .use(require('ssb-replicate'))
-                   .use(require('ssb-friends'))
-                   .use(require('ssb-blobs'))
-                   .use(require('ssb-invite'))
-
-                   .use(require('ssb-identities'))
-
-                   .use(require('ssb-links'))
-                   .use(require('ssb-ebt'))
 module.exports = {
     start: start,
 }
