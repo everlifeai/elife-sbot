@@ -76,7 +76,10 @@ function start(config, cb) {
     function start_sbot_1() {
         let keys = ssbKeys.loadOrCreateSync(u.secretFile())
 
-        let cfg = {
+        let appName = `everlife_${config.node_num}`
+
+        let cfg = require('ssb-config/inject')(appName, {
+            appKey: appKey,
             port : port,
             keys: keys,
             path: sbotFolder,
@@ -85,7 +88,26 @@ function start(config, cb) {
             caps: {
                 shs: appKey
             },
-        }
+            friends: { // not using ssb-friends (sbot/contacts fixes hops at 2, so this setting won't do anything)
+                dunbar: 150,
+                hops: 2 // down from 3
+            }
+        })
+
+        if (!cfg.gossip) cfg.gossip = {}
+        cfg.gossip.autoPopulate = true
+
+
+        const pubkey = keys.id.slice(1).replace(`.${keys.curve}`, '')
+        const socketPath = path.join(cfg.path, 'socket')
+        cfg.connections.incoming.unix = [{ scope: 'device', transform: 'noauth' }]
+        cfg.remote = `unix:${socketPath}:~noauth:${pubkey}`
+        cfg.connections.incoming.tunnel = [{ scope: 'public', transform: 'shs' }]
+        cfg.connections.outgoing.tunnel = [{ transform: 'shs' }]
+
+        // Support DHT invites (only as a client, for now)
+        cfg.connections.outgoing.dht = [{ transform: 'shs' }]
+
 
         let sbot = createSbot(cfg)
         sbot.whoami((err, feed) => {
