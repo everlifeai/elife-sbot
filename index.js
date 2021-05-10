@@ -32,6 +32,8 @@ function main() {
 function loadConfig() {
     let cfg = {};
 
+    cfg.node_num = u.nodeNum()
+
     if(process.env.SSB_PORT) {
         cfg.SSB_PORT = process.env.SSB_PORT
     } else {
